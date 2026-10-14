@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta name="description" content="SiLaDuMas - Sistem Layanan Pengaduan Masyarakat Resmi SMAN 15 Tebo. Salurkan aspirasi, saran, dan pengaduan Anda secara aman, cepat, dan transparan.">
+  <meta name="keywords" content="SiLaDuMas, Pengaduan Sekolah, SMAN 15 Tebo, Layanan Pengaduan Masyarakat">
+  <meta name="author" content="Fary EdTech & Tim SMAN 15 Tebo">
+  <title>SiLaDuMas - SMAN 15 Tebo</title>
+  <link rel="icon" type="image/png" href="./logo.png">
+
+  <!-- Google Fonts: Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Core Icons & Vendor CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+
+  <!-- Custom Modular CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <!-- Vendor JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+
+  <!-- Loading Global Spinner -->
+  <div id="loadingOverlay">
+    <div class="spinner-border text-primary mb-3" role="status" style="width: 3.2rem; height: 3.2rem;"></div>
+    <h6 class="fw-bold text-dark">Sedang Memproses...</h6>
+  </div>
+
+  <!-- Back to Top Button -->
+  <button type="button" id="btn-back-to-top" onclick="scrollToTop()" title="Kembali ke atas">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Overlay Mobile Sidebar -->
+  <div id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+  <!-- ======================================================= -->
+  <!-- 1. WRAPPER PUBLIC (HALAMAN UTAMA MASYARAKAT)           -->
+  <!-- ======================================================= -->
+  <div id="wrapper-public" class="app-wrapper active">
+    
+    <!-- Mobile Bottom Navigation -->
+    <div class="mobile-bottom-nav d-md-none">
+      <div class="nav-item-mobile active" id="btn-nav-home" onclick="showView('view-home')">
+        <i class="fas fa-home"></i><span>Home</span>
+      </div>
+      <div class="nav-item-mobile nav-item-center" id="btn-nav-form" onclick="showView('view-form')">
+        <i class="fas fa-pen-nib"></i><span>Lapor</span>
+      </div>
+      <div class="nav-item-mobile" id="btn-nav-status" onclick="showView('view-status')">
+        <i class="fas fa-search"></i><span>Status</span>
+      </div>
+    </div>
+    
+    <div class="d-flex flex-column min-vh-100">
+      <!-- Public Navbar -->
+      <nav class="navbar sticky-top">
+        <div class="container">
+          <div class="school-brand">
+            <img id="ui-logo-nav" src="" width="40" height="40" style="object-fit:contain; display:none;" alt="Logo Sekolah"> 
+            <div>
+              <div class="school-name" id="ui-namasekolah-nav">Memuat...</div>
+            </div>
+          </div>
+          <button onclick="navigasiKe('login')" class="btn btn-light btn-sm rounded-pill px-4 fw-bold shadow-sm text-primary border">
+            <i class="fas fa-lock me-2"></i>Admin
+          </button>
+        </div>
+      </nav>
+
+      <!-- View: Home / Landing -->
+      <div id="view-home">
+        <!-- Modern 40:60 Split Hero Section with Dynamic Slanted Divider (Miring) -->
+        <div class="hero-split-container">
+          <div class="hero-split-wrapper">
+            
+            <!-- Left Side: 40% (Identitas Sekolah & Wilayah, Background Gradien 3 Warna, Pembatas Miring) -->
+            <div class="hero-side-40">
+              <div class="hero-40-content">
+                <div class="hero-logos-row">
+                  <img id="ui-logoinstansi-hero" src="" alt="Logo Instansi" title="Logo Instansi" style="display:none;">
+                  <img id="ui-logo-hero" src="" alt="Logo Sekolah" title="Logo Sekolah" style="display:none;">
+                </div>
+                <div class="badge-provinsi">
+                  <i class="fas fa-map-marker-alt me-1"></i> <span id="ui-provinsi-hero">PROVINSI JAMBI</span>
+                </div>
+                <h2 class="hero-school-name" id="ui-namasekolah-hero">SMAN 15 TEBO</h2>
+                <div class="hero-divider-bar"></div>
+                <p class="hero-school-slogan" id="ui-slogan">
+                  Sampaikan aspirasi dan laporan Anda demi kemajuan sekolah kita bersama.
+                </p>
+                <div class="hero-official-badge">
+                  <i class="fas fa-shield-alt text-warning me-2"></i> Portal Resmi Pengaduan Sekolah
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Side: 60% (Foto Gedung Sekolah + Layanan Pengaduan + Tombol Aksi) -->
+            <div class="hero-side-60" id="heroSide60">
+              <div class="hero-60-overlay"></div>
+              <div class="hero-60-content">
+                <span class="badge bg-white text-primary rounded-pill px-3 py-2 fw-bold text-uppercase mb-3 shadow-sm" style="letter-spacing:1px; font-size:0.8rem;">
+                  <i class="fas fa-bullhorn me-1"></i> Portal SiLaDuMas
+                </span>
+                <h1 class="hero-60-title">
+                  Layanan Pengaduan Masyarakat
+                </h1>
+                <p class="hero-60-lead">
+                  Suara Anda sangat berarti bagi kemajuan dan kenyamanan lingkungan pendidikan kita bersama.
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                  <button onclick="showView('view-form')" class="btn btn-primary-custom btn-hero shadow-lg">
+                    <i class="fas fa-pen-nib me-2"></i> Buat Laporan
+                  </button>
+                  <button onclick="showView('view-status')" class="btn btn-outline-custom btn-hero">
+                    <i class="fas fa-search me-2"></i> Cek Status
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        
+        <!-- Section: Slider Banner Depan dengan Latar Belakang Gradien Tema Aktif & Potongan Miring -->
+        <div class="home-slider-backdrop-section" id="section-home-carousel">
+          <div class="container home-carousel-wrapper" id="wrap-home-carousel">
+            <div id="homeSlideCarousel" class="carousel slide carousel-fade shadow-lg rounded-4 overflow-hidden border border-white border-2" data-bs-ride="carousel" data-bs-interval="5000">
+              <div class="carousel-indicators" id="carouselIndicators"></div>
+              <div class="carousel-inner" id="carouselInner">
+                <!-- Slides otomatis dimuat via loadHomeSlides() -->
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#homeSlideCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#homeSlideCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature Highlights -->
+        <div class="container" style="position: relative; z-index: 5;">
+          <div class="row g-4 justify-content-center">
+            <div class="col-md-4">
+              <div class="feature-card card-blue">
+                <div class="feature-icon"><i class="fas fa-user-shield"></i></div>
+                <h5 class="fw-bold">Aman & Rahasia</h5>
+                <p class="small">Identitas pelapor dijaga kerahasiaannya. Data Anda tersimpan aman.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="feature-card card-orange">
+                <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                <h5 class="fw-bold">Respon Cepat</h5>
+                <p class="small">Setiap laporan akan segera ditindaklanjuti oleh tim petugas yang berwenang.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="feature-card card-green">
+                <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                <h5 class="fw-bold">Transparan</h5>
+                <p class="small">Pantau progres penyelesaian laporan Anda secara langsung menggunakan nomor tiket.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="height: 80px;"></div>
+      </div>
+
+      <!-- View: Formulir Pengaduan (Background Tema Gradien) -->
+      <div id="view-form" class="form-page-wrapper" style="display:none;">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-8">
+              <button onclick="showView('view-home')" class="btn btn-light text-primary fw-bold mb-3 shadow rounded-pill px-4">
+                <i class="fas fa-arrow-left me-2"></i> Kembali
+              </button>
+              <div class="card card-form">
+                <div class="form-header">
+                  <h4 class="mb-1 fw-bold">Isi Formulir Pengaduan</h4>
+                  <small class="text-muted">Mohon lengkapi formulir di bawah ini dengan informasi yang valid.</small>
+                </div>
+                <div class="card-body p-4 p-md-5">
+                  <form id="formPengaduan" onsubmit="handleFormSubmit(event)">
+                  <!-- Accordion 3 Bagian: Data Pelapor, Rincian, Lampiran -->
+                  <div class="accordion custom-accordion mb-4" id="accordionPengaduan">
+                    
+                    <!-- 1. Bagian Data Pelapor -->
+                    <div class="accordion-item shadow-sm border-0 mb-3 rounded-4 overflow-hidden">
+                      <h2 class="accordion-header" id="headingPelapor">
+                        <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePelapor" aria-expanded="true" aria-controls="collapsePelapor">
+                          <i class="fas fa-id-card text-primary me-2 fa-lg"></i>
+                          <span>1. Data Pelapor</span>
+                          <span class="badge bg-primary-subtle text-primary ms-auto me-2 font-monospace">Langkah 1</span>
+                        </button>
+                      </h2>
+                      <div id="collapsePelapor" class="accordion-collapse collapse show" aria-labelledby="headingPelapor">
+                        <div class="accordion-body p-4 bg-white">
+                          <div class="row mb-3">
+                            <div class="col-md-6 mb-3">
+                              <label class="small fw-bold text-muted mb-1">Nama Lengkap <span class="text-danger">*</span></label>
+                              <input type="text" class="form-control" name="nama" required placeholder="Nama lengkap Anda">
+                            </div>
+                            <div class="col-md-6">
+                              <label class="small fw-bold text-muted mb-1">Status Pelapor <span class="text-danger">*</span></label>
+                              <select class="form-select" name="statusPelapor" id="statusPelapor" onchange="handleStatusPelaporChange()">
+                                <option value="Siswa">Siswa</option>
+                                <option value="Orang Tua">Orang Tua</option>
+                                <option value="Masyarakat">Masyarakat</option>
+                                <option value="Guru/Staff">Guru/Staff</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="row mb-2">
+                            <div class="col-md-6 mb-3">
+                              <!-- Label & Placeholder Cerdas -->
+                              <label class="small fw-bold text-muted mb-1" id="labelIdentitas">Nomor Identitas (NIS / NISN)</label>
+                              <input type="text" class="form-control" name="identitas" id="inputIdentitas" placeholder="Masukkan NIS atau NISN (Boleh kosongkan)">
+                              <div class="form-text small text-muted" id="hintIdentitas">Bagi siswa, silakan masukkan NIS / NISN Anda (opsional).</div>
+                            </div>
+                            <div class="col-md-6">
+                              <label class="small fw-bold text-muted mb-1">Nomor WhatsApp Aktif <span class="text-danger">*</span></label>
+                              <input type="text" class="form-control" name="kontak" placeholder="Contoh: 08123456789" required>
+                              <div class="form-text small text-muted">Untuk konfirmasi & notifikasi tindak lanjut.</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- 2. Bagian Rincian Pengaduan -->
+                    <div class="accordion-item shadow-sm border-0 mb-3 rounded-4 overflow-hidden">
+                      <h2 class="accordion-header" id="headingRincian">
+                        <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRincian" aria-expanded="true" aria-controls="collapseRincian">
+                          <i class="fas fa-file-alt text-primary me-2 fa-lg"></i>
+                          <span>2. Rincian Pengaduan</span>
+                          <span class="badge bg-primary-subtle text-primary ms-auto me-2 font-monospace">Langkah 2</span>
+                        </button>
+                      </h2>
+                      <div id="collapseRincian" class="accordion-collapse collapse show" aria-labelledby="headingRincian">
+                        <div class="accordion-body p-4 bg-white">
+                          <div class="mb-3">
+                            <label class="small fw-bold text-muted mb-1">Judul Laporan <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="judul" required placeholder="Contoh: Kerusakan Sarana Lab / Pelanggaran Kedisiplinan">
+                          </div>
+                          <div class="row mb-3">
+                            <div class="col-md-6 mb-3">
+                              <label class="small fw-bold text-muted mb-1">Kategori Pengaduan <span class="text-danger">*</span></label>
+                              <select class="form-select" name="kategori">
+                                <option>Sarana Prasarana</option>
+                                <option>Akademik</option>
+                                <option>Bullying/Kedisiplinan</option>
+                                <option>Keuangan</option>
+                                <option>Lainnya</option>
+                              </select>
+                            </div>
+                            <div class="col-md-6">
+                              <label class="small fw-bold text-muted mb-1">Tanggal Kejadian</label>
+                              <input type="date" class="form-control" name="waktuKejadian">
+                            </div>
+                          </div>
+                          <div class="mb-3">
+                            <label class="small fw-bold text-muted mb-1">Lokasi Kejadian</label>
+                            <input type="text" class="form-control" name="lokasi" placeholder="Misal: Lapangan Olahraga, Ruang Kelas XI, Gedung B, dll.">
+                          </div>
+                          <div class="mb-2">
+                            <label class="small fw-bold text-muted mb-1">Uraian Masalah Lengkap <span class="text-danger">*</span></label>
+                            <textarea class="form-control" name="uraian" rows="5" required placeholder="Jelaskan kronologi kejadian secara detail dan objektif..."></textarea>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- 3. Bagian Lampiran Bukti -->
+                    <div class="accordion-item shadow-sm border-0 mb-3 rounded-4 overflow-hidden">
+                      <h2 class="accordion-header" id="headingLampiran">
+                        <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLampiran" aria-expanded="true" aria-controls="collapseLampiran">
+                          <i class="fas fa-paperclip text-primary me-2 fa-lg"></i>
+                          <span>3. Lampiran Bukti Pendukung</span>
+                          <span class="badge bg-primary-subtle text-primary ms-auto me-2 font-monospace">Langkah 3 (Opsional)</span>
+                        </button>
+                      </h2>
+                      <div id="collapseLampiran" class="accordion-collapse collapse show" aria-labelledby="headingLampiran">
+                        <div class="accordion-body p-4 bg-white">
+                          <div class="upload-dropzone">
+                            <i class="fas fa-cloud-upload-alt fa-2x text-primary mb-2"></i>
+                            <h6 class="fw-bold mb-1">Lampirkan Bukti Foto atau Dokumen</h6>
+                            <p class="small text-muted mb-2">
+                              • <b>Dokumen PDF:</b> Maksimal ukuran 500 KB per file.<br>
+                              • <b>Foto / Gambar:</b> Bebas ukuran awal (Otomatis dioptimasi & dikompres sistem maksimal 500 KB).<br>
+                              • Maksimal total 3 berkas lampiran.
+                            </p>
+                            <button type="button" class="btn btn-outline-primary rounded-pill px-4 mt-2" onclick="triggerFileSelect()">
+                              <i class="fas fa-plus me-1"></i> Pilih Berkas
+                            </button>
+                            <input type="file" id="hiddenFileInput" style="display:none;" accept="image/*,.pdf" onchange="handleFileSelect(this)">
+                            <div id="fileListContainer" class="mt-3 text-start"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  
+                  <button type="submit" class="btn btn-primary w-100 py-3 fw-bold rounded-pill shadow-lg" style="background: var(--primary-solid); border:none; font-size:1.05rem;">
+                    <i class="fas fa-paper-plane me-2"></i> KIRIM LAPORAN SEKARANG
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <!-- View: Cek Status Tiket -->
+      <div id="view-status" class="container my-5" style="display:none;">
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <button onclick="showView('view-home')" class="btn btn-light text-primary fw-bold mb-3 shadow-sm rounded-pill px-4">
+              <i class="fas fa-arrow-left me-2"></i> Kembali
+            </button>
+            <div class="card card-form text-center p-4 p-md-5">
+              <div class="mb-3 text-warning"><i class="fas fa-search-location fa-4x"></i></div>
+              <h3 class="fw-bold mb-2">Lacak Status Pengaduan</h3>
+              <p class="text-muted small mb-4">Masukkan Nomor Tiket yang Anda peroleh saat mengirim laporan.</p>
+              
+              <div class="input-group input-group-lg mb-4 shadow-sm rounded-pill overflow-hidden border">
+                <input type="text" id="ticketInput" class="form-control border-0 px-4" placeholder="Contoh: TKT-20261011-001">
+                <button class="btn btn-warning fw-bold px-4 text-white" onclick="checkTicket()">
+                  <i class="fas fa-search me-1"></i> LACAK
+                </button>
+              </div>
+
+              <!-- Hasil Pelacakan Tiket -->
+              <div id="statusResult" class="text-start mt-3 bg-light p-4 rounded-4 border" style="display:none;">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <small class="text-muted fw-bold">ID Tiket: <span id="resTiket" class="text-primary"></span></small>
+                  <span id="resStatus" class="badge rounded-pill">Memuat...</span>
+                </div>
+                <h5 id="resJudul" class="fw-bold text-dark mb-3"></h5>
+                <div class="p-3 bg-white rounded-3 border-start border-warning border-4 shadow-sm mb-3">
+                  <small class="d-block text-muted fw-bold mb-1">Tindak Lanjut Admin:</small>
+                  <span id="resCatatan" class="fst-italic text-dark"></span>
+                </div>
+                <div class="text-end">
+                  <small class="text-muted"><i class="far fa-calendar-alt me-1"></i> Tanggal: <span id="resTanggal"></span></small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Info Kontak & Footer Publik -->
+      <div class="info-section">
+        <div class="container">
+          <div class="row gy-4">
+            <div class="col-md-5">
+              <h4 class="fw-bold mb-3 text-white">Hubungi Kami</h4>
+              <p class="mb-4" style="opacity:0.85;">Pusat layanan informasi dan pengaduan resmi <span id="ui-namasekolah-footer">Sekolah</span>. Kami berkomitmen memberikan pelayanan terbaik.</p>
+              <div class="d-flex align-items-start mb-3">
+                <div class="icon-map-wrapper"><i class="fas fa-map-marker-alt"></i></div>
+                <div><h6 class="fw-bold mb-1">Alamat</h6><span class="small" style="opacity:0.8;" id="ui-jalan">-</span></div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <h5 class="fw-bold mb-3 text-white">Kontak Resmi</h5>
+              <a href="#" id="ui-telp-link" class="info-link"><i class="fas fa-phone"></i> <span id="ui-telp">-</span></a>
+              <a href="#" id="ui-email-link" class="info-link"><i class="fas fa-envelope"></i> <span id="ui-email">-</span></a>
+              <a href="#" id="ui-website-link" target="_blank" class="info-link"><i class="fas fa-globe"></i> <span id="ui-website">-</span></a>
+            </div>
+            <div class="col-md-4">
+              <h5 class="fw-bold mb-3 text-white">Tautan Terkait</h5>
+              <a href="#" id="ui-webdinas" target="_blank" class="info-link"><i class="fas fa-external-link-alt"></i> Website Dinas Pendidikan</a>
+              <a href="#" id="ui-webspmb" target="_blank" class="info-link"><i class="fas fa-graduation-cap"></i> Portal SPMB / PPDB</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="container">
+          <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <div>&copy; <span id="ui-tahun"></span> SiLaDuMas <b id="ui-namasekolah-copyright"></b>. Hak Cipta Dilindungi.</div>
+            <div class="small">
+              <a href="#" class="text-white-50 text-decoration-none me-3" data-bs-toggle="modal" data-bs-target="#modalPrivacy">Kebijakan Privasi</a>
+              <span class="text-white-50">Sistem oleh <a href="https://www.fary-edtech.my.id" target="_blank" class="text-warning text-decoration-none fw-bold">Fary EdTech</a></span>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ======================================================= -->
+  <!-- 2. WRAPPER LOGIN ADMIN                                  -->
+  <!-- ======================================================= -->
+  <div id="wrapper-login" class="app-wrapper">
+    <div class="d-flex align-items-center justify-content-center" style="min-height: 100vh; background: #eef2f5;">
+      <div class="col-md-4 col-sm-10">
+        <div class="card p-4 p-md-5 shadow-lg border-0 rounded-4">
+          <div class="text-center mb-4">
+            <div class="bg-light rounded-circle d-inline-flex p-3 mb-3"><i class="fas fa-user-shield fa-2x text-primary"></i></div>
+            <h4 class="fw-bold">Panel Masuk Admin</h4>
+            <p class="text-muted small">Kelola dan tindak lanjuti laporan pengaduan masuk.</p>
+          </div>
+          <form onsubmit="handleLogin(event)">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="user" placeholder="Username" required>
+              <label>Username</label>
+            </div>
+            <div class="input-group mb-4">
+              <div class="form-floating flex-grow-1">
+                <input type="password" class="form-control" id="pass" placeholder="Password" required style="border-right:0;">
+                <label>Password</label>
+              </div>
+              <span class="input-group-text bg-white border-start-0" onclick="togglePass()" style="cursor:pointer;" title="Lihat password">
+                <i class="fas fa-eye text-muted" id="eyeIcon"></i>
+              </span>
+            </div>
+            <button class="btn btn-primary w-100 py-3 fw-bold rounded-pill shadow" style="background: var(--primary-solid); border:none;">
+              <i class="fas fa-sign-in-alt me-2"></i> MASUK SEKARANG
+            </button>
+            <div class="text-center mt-4">
+              <button type="button" onclick="navigasiKe('public')" class="btn btn-link small text-decoration-none text-muted fw-bold p-0">
+                <i class="fas fa-arrow-left me-1"></i> Kembali ke Beranda
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================= -->
+  <!-- 3. WRAPPER DASHBOARD ADMIN                              -->
+  <!-- ======================================================= -->
+  <div id="wrapper-dashboard" class="app-wrapper">
+    <!-- Mobile Bottom Navigation (Admin) -->
+    <div id="admin-bottom-nav" class="mobile-bottom-nav d-md-none">
+      <div class="nav-item-mobile position-relative" id="nav-mob-data" onclick="switchAdminTab('data')">
+        <i class="fas fa-inbox"></i><span>Laporan</span>
+        <span class="badge bg-danger rounded-pill position-absolute" id="badge-mob-laporan-baru" style="display:none; top:4px; right:18%; font-size:0.65rem; padding: 2px 5px;">0</span>
+      </div>
+      <div class="nav-item-mobile" id="nav-mob-setting" onclick="switchAdminTab('setting')">
+        <i class="fas fa-sliders-h"></i><span>Setting</span>
+      </div>
+      <div class="nav-item-mobile nav-item-center active" id="nav-mob-dashboard" onclick="switchAdminTab('dashboard')">
+        <i class="fas fa-chart-pie"></i><span>Home</span>
+      </div>
+      <div class="nav-item-mobile" id="nav-mob-users" onclick="switchAdminTab('users')">
+        <i class="fas fa-users"></i><span>Akun</span>
+      </div>
+      <div class="nav-item-mobile text-danger" id="nav-mob-logout" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i><span>Keluar</span>
+      </div>
+    </div>
+
+    <div class="admin-layout">      
+      <!-- Sidebar Desktop -->
+      <div id="adminSidebar" class="sidebar p-3">
+        <div class="d-flex justify-content-between align-items-center mb-4 px-2 mt-2">
+          <div class="d-flex align-items-center gap-2">
+            <div class="sidebar-icon-box rounded-3 d-flex align-items-center justify-content-center shadow-sm" style="width:38px;height:38px;">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h5 class="mb-0 fw-bold text-white">SiLaDuMas</h5>
+          </div>
+          <button class="btn btn-link text-white d-md-none" onclick="toggleSidebar()"><i class="fas fa-times fa-lg"></i></button>
+        </div>
+        
+        <ul class="nav flex-column gap-1">
+          <li class="nav-item">
+            <a class="nav-link-admin active" onclick="switchAdminTab('dashboard'); if(window.innerWidth < 768) toggleSidebar();" id="menu-dashboard">
+              <i class="fas fa-chart-pie"></i> Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link-admin d-flex justify-content-between align-items-center" onclick="switchAdminTab('data'); if(window.innerWidth < 768) toggleSidebar();" id="menu-data">
+              <span><i class="fas fa-inbox me-2"></i> Laporan Masuk</span>
+              <span class="badge bg-danger rounded-pill px-2 py-1 shadow-sm font-monospace" id="badge-laporan-baru" style="display:none; font-size:0.75rem;">0</span>
+            </a>
+          </li>
+          <li class="nav-item" id="wrap-menu-slides">
+            <a class="nav-link-admin" onclick="switchAdminTab('slides'); if(window.innerWidth < 768) toggleSidebar();" id="menu-slides">
+              <i class="fas fa-images"></i> Foto Slide
+            </a>
+          </li>
+          <li class="nav-item" id="wrap-menu-users">
+            <a class="nav-link-admin" onclick="switchAdminTab('users'); if(window.innerWidth < 768) toggleSidebar();" id="menu-users">
+              <i class="fas fa-users"></i> Manajemen Akun
+            </a>
+          </li>
+          <li class="nav-item" id="wrap-menu-setting">
+            <a class="nav-link-admin" onclick="switchAdminTab('setting'); if(window.innerWidth < 768) toggleSidebar();" id="menu-setting">
+              <i class="fas fa-sliders-h"></i> Pengaturan
+            </a>
+          </li>
+          <li class="nav-item mt-4 pt-3 border-top" style="border-color: rgba(255,255,255,0.2) !important;">
+            <a class="nav-link-admin text-danger" onclick="logout()">
+              <i class="fas fa-sign-out-alt"></i> Keluar
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Content Area -->
+      <div class="admin-content">
+        <div class="mobile-header">
+          <div class="d-flex align-items-center gap-2">
+            <button class="btn btn-light shadow-sm border" onclick="toggleSidebar()"><i class="fas fa-bars text-primary"></i></button>
+            <h6 class="mb-0 fw-bold text-secondary">Dashboard Admin</h6>
+          </div>
+          <img id="ui-logo-admin-nav" src="" width="35" height="35" style="object-fit:contain; display:none;" alt="Logo">
+        </div>
+
+        <div class="admin-body">
+          <!-- Sub-Tab: Dashboard -->
+          <div id="adm-view-dashboard" class="w-100">
+            <div class="row g-3 mb-4">
+              <div class="col-6 col-md-3">
+                <div class="card stat-card bg-primary text-white h-100">
+                  <div class="card-body p-3">
+                    <p class="mb-1 small opacity-75">Total Laporan</p>
+                    <h3 class="fw-bold mb-0" id="stat-total">0</h3>
+                    <i class="fas fa-file-alt stat-icon"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-md-3">
+                <div class="card stat-card bg-info text-white h-100">
+                  <div class="card-body p-3">
+                    <p class="mb-1 small opacity-75">Laporan Baru</p>
+                    <h3 class="fw-bold mb-0" id="stat-baru">0</h3>
+                    <i class="fas fa-envelope stat-icon"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-md-3">
+                <div class="card stat-card bg-warning text-dark h-100">
+                  <div class="card-body p-3">
+                    <p class="mb-1 small opacity-75">Sedang Diproses</p>
+                    <h3 class="fw-bold mb-0" id="stat-proses">0</h3>
+                    <i class="fas fa-tools stat-icon"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-md-3">
+                <div class="card stat-card bg-success text-white h-100">
+                  <div class="card-body p-3">
+                    <p class="mb-1 small opacity-75">Laporan Selesai</p>
+                    <h3 class="fw-bold mb-0" id="stat-selesai">0</h3>
+                    <i class="fas fa-check-circle stat-icon"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row g-4">
+              <div class="col-md-5">
+                <div class="card border-0 shadow-sm rounded-4 h-100">
+                  <div class="card-header bg-white border-0 pt-4 pb-0"><h6 class="fw-bold text-dark">Status Penyelesaian</h6></div>
+                  <div class="card-body d-flex align-items-center justify-content-center" style="position: relative; height:260px;">
+                    <canvas id="chartStatus"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7">
+                <div class="card border-0 shadow-sm rounded-4 h-100">
+                  <div class="card-header bg-white border-0 pt-4 pb-0"><h6 class="fw-bold text-dark">Sebaran Kategori Laporan</h6></div>
+                  <div class="card-body" style="position: relative; height:260px;">
+                    <canvas id="chartKategori"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+            
+          <!-- Sub-Tab: Data Laporan -->
+          <div id="adm-view-data" class="w-100" style="display:none;">
+            <div class="card shadow-sm border-0 rounded-4">
+              <div class="card-header bg-white py-3 border-0 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <h5 class="mb-0 fw-bold text-dark">Daftar Pengaduan Masuk</h5>
+                <button class="btn btn-outline-secondary btn-sm rounded-pill px-3" onclick="refreshData()" title="Muat Ulang">
+                  <i class="fas fa-sync-alt me-1"></i> Refresh
+                </button>
+              </div>
+              <div class="px-3 pb-3">
+                <div class="row g-2 bg-light p-3 rounded-4 border mb-2 mx-0 align-items-end">
+                  <div class="col-12 col-md-4">
+                    <label class="small fw-semibold text-muted mb-1">Cari Kata Kunci</label>
+                    <input type="text" id="searchInput" class="form-control form-control-sm border-0 shadow-sm" placeholder="ID Tiket / Nama / Judul...">
+                  </div>
+                  <div class="col-6 col-md-3">
+                    <label class="small fw-semibold text-muted mb-1">Dari Tanggal</label>
+                    <input type="date" id="filterStart" class="form-control form-control-sm border-0 shadow-sm">
+                  </div>
+                  <div class="col-6 col-md-3">
+                    <label class="small fw-semibold text-muted mb-1">Sampai Tanggal</label>
+                    <input type="date" id="filterEnd" class="form-control form-control-sm border-0 shadow-sm">
+                  </div>
+                  <div class="col-12 col-md-2 d-flex gap-2">
+                    <button class="btn btn-sm btn-primary rounded-pill px-3 shadow-sm fw-bold w-100" onclick="loadData(1)">
+                      <i class="fas fa-search me-1"></i> Filter
+                    </button>
+                    <button class="btn btn-sm btn-success rounded-pill px-3 shadow-sm w-100" onclick="exportData()" title="Export ke Excel">
+                      <i class="fas fa-file-excel"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body p-0 border-top">
+                <div class="table-responsive">
+                  <table id="tableData" class="table table-custom table-hover align-middle mb-0 text-nowrap">
+                    <thead>
+                      <tr>
+                        <th class="ps-4 py-3">ID Tiket</th>
+                        <th>Tanggal</th>
+                        <th>Nama Pelapor</th>
+                        <th>Kategori</th>
+                        <th>Status</th>
+                        <th class="text-end pe-4">Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="card-footer bg-white border-0 py-3">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                  <small class="text-muted" id="pageInfo">Menampilkan data...</small>
+                  <nav><ul class="pagination pagination-sm mb-0" id="paginationArea"></ul></nav>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-Tab: Manajemen Foto Slide Depan -->
+          <div id="adm-view-slides" style="display:none;" class="w-100">
+            <div class="card shadow-sm border-0 rounded-4">
+              <div class="card-header bg-white py-3 border-0 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <div>
+                  <h5 class="mb-0 fw-bold text-dark"><i class="fas fa-images me-2 text-primary"></i>Manajemen Foto Slide Beranda</h5>
+                  <small class="text-muted">Kelola slide banner beranda (Rasio 7:3) untuk mempercantik tampilan portal pengaduan</small>
+                </div>
+                <button class="btn btn-primary btn-sm rounded-pill px-4 fw-bold shadow-sm" onclick="openModalSlide()">
+                  <i class="fas fa-plus me-1"></i> Tambah Foto Slide
+                </button>
+              </div>
+              <div class="card-body p-0 border-top">
+                <div class="table-responsive">
+                  <table id="tableSlides" class="table table-custom table-hover align-middle mb-0 text-nowrap">
+                    <thead>
+                      <tr>
+                        <th class="ps-4" width="70">No</th>
+                        <th width="200">Foto Slide (7:3)</th>
+                        <th>Judul & Deskripsi</th>
+                        <th width="140">Status Tampil</th>
+                        <th class="text-end pe-4" width="140">Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-Tab: Manajemen Akun -->
+          <div id="adm-view-users" style="display:none;" class="w-100">
+            <div class="card shadow-sm border-0 rounded-4">
+              <div class="card-header bg-white py-3 border-0 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold text-dark">Manajemen Pengguna & Hak Akses</h5>
+                <button class="btn btn-primary btn-sm rounded-pill px-3 fw-bold" onclick="openModalUser()">
+                  <i class="fas fa-plus me-1"></i> Tambah Akun
+                </button>
+              </div>
+              <div class="card-body p-0 border-top">
+                <div class="table-responsive">
+                  <table id="tableUsers" class="table table-custom table-hover align-middle mb-0 text-nowrap">
+                    <thead>
+                      <tr>
+                        <th class="ps-4">Username</th>
+                        <th>Hak Akses Kategori</th>
+                        <th class="text-end pe-4">Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-Tab: Pengaturan Aplikasi (3 Tab: Sistem, Logo & Tema, Backup & Restore) -->
+          <div id="adm-view-setting" style="display:none;" class="w-100">
+            <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+              <div class="card-header bg-white py-3 border-0">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                  <div>
+                    <h5 class="mb-0 fw-bold text-dark"><i class="fas fa-sliders-h me-2 text-primary"></i>Pengaturan Aplikasi</h5>
+                    <small class="text-muted">Kelola identitas sistem, tema tampilan gradien, dan pemulihan database</small>
+                  </div>
+                </div>
+
+                <!-- Nav Tabs 3 Bagian -->
+                <ul class="nav nav-pills custom-setting-pills" id="settingTabs" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link active rounded-pill px-4" id="tab-sistem-btn" data-bs-toggle="pill" data-bs-target="#tab-sistem" type="button" role="tab">
+                      <i class="fas fa-cog me-2"></i> Pengaturan Sistem
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link rounded-pill px-4" id="tab-tema-btn" data-bs-toggle="pill" data-bs-target="#tab-tema" type="button" role="tab">
+                      <i class="fas fa-palette me-2"></i> Logo & Tema Tampilan
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link rounded-pill px-4" id="tab-backup-btn" data-bs-toggle="pill" data-bs-target="#tab-backup" type="button" role="tab">
+                      <i class="fas fa-database me-2"></i> Backup & Restore
+                    </button>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="card-body p-4 border-top bg-light">
+                <form id="formSetting" onsubmit="saveSettings(event)">
+                  <!-- Hidden inputs untuk logo, foto sekolah, dan tema -->
+                  <input type="hidden" name="cfg_logo" id="input_logo" value="">
+                  <input type="hidden" name="cfg_instansi" id="input_instansi" value="">
+                  <input type="hidden" name="cfg_fotosekolah" id="input_fotosekolah" value="">
+                  <input type="hidden" name="cfg_theme" id="input_theme" value="">
+                  <input type="hidden" name="cfg_running" id="cfg_running" value="">
+
+                  <div class="tab-content" id="settingTabsContent">
+                    
+                    <!-- ================= TAB 1: PENGATURAN SISTEM ================= -->
+                    <div class="tab-pane fade show active" id="tab-sistem" role="tabpanel">
+                      <div class="card border-0 shadow-sm rounded-4 p-4 mb-3 bg-white">
+                        <h6 class="fw-bold text-primary mb-3"><i class="fas fa-school me-2"></i>Identitas Sekolah & Wilayah</h6>
+                        <div class="row g-3">
+                          <div class="col-md-6">
+                            <label class="small fw-bold text-muted mb-1">Nama Sekolah</label>
+                            <input type="text" name="cfg_sekolah" id="cfg_sekolah" class="form-control" value="">
+                          </div>
+                          <div class="col-md-6">
+                            <label class="small fw-bold text-muted mb-1">Provinsi</label>
+                            <input type="text" name="cfg_provinsi" id="cfg_provinsi" class="form-control" value="" required>
+                          </div>
+                          <div class="col-md-12">
+                            <label class="small fw-bold text-muted mb-1">Slogan / Kalimat Sambutan</label>
+                            <textarea name="cfg_slogan" id="cfg_slogan" class="form-control" rows="2"></textarea>
+                          </div>
+                          <div class="col-md-12">
+                            <label class="small fw-bold text-muted mb-1">Alamat Lengkap Sekolah</label>
+                            <input type="text" name="cfg_jalan" id="cfg_jalan" class="form-control" value="">
+                          </div>
+                          <div class="col-md-4">
+                            <label class="small fw-bold text-muted mb-1">Nomor Telepon Sekolah</label>
+                            <input type="text" name="cfg_telp" id="cfg_telp" class="form-control" value="">
+                          </div>
+                          <div class="col-md-4">
+                            <label class="small fw-bold text-muted mb-1">Email Resmi Sekolah</label>
+                            <input type="text" name="cfg_email" id="cfg_email" class="form-control" value="">
+                          </div>
+                          <div class="col-md-4">
+                            <label class="small fw-bold text-muted mb-1">Tahun Anggaran / Periode</label>
+                            <input type="text" name="cfg_tahun" id="cfg_tahun" class="form-control" value="">
+                          </div>
+                        </div>
+
+                        <h6 class="fw-bold text-primary mb-3 mt-4 border-top pt-3"><i class="fas fa-link me-2"></i>Tautan Eksternal</h6>
+                        <div class="row g-3">
+                          <div class="col-md-4">
+                            <label class="small fw-bold text-muted mb-1">Website Sekolah</label>
+                            <input type="text" name="cfg_website" id="cfg_website" class="form-control" value="">
+                          </div>
+                          <div class="col-md-4">
+                            <label class="small fw-bold text-muted mb-1">Website Dinas Pendidikan</label>
+                            <input type="text" name="cfg_dinas" id="cfg_dinas" class="form-control" value="">
+                          </div>
+                          <div class="col-md-4">
+                            <label class="small fw-bold text-muted mb-1">Website SPMB / PPDB</label>
+                            <input type="text" name="cfg_spmb" id="cfg_spmb" class="form-control" value="">
+                          </div>
+                        </div>
+
+                        <div class="text-end mt-4">
+                          <button type="submit" class="btn btn-primary rounded-pill px-5 fw-bold shadow">
+                            <i class="fas fa-save me-1"></i> Simpan Pengaturan Sistem
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- ================= TAB 2: LOGO & TEMA TAMPILAN ================= -->
+                    <div class="tab-pane fade" id="tab-tema" role="tabpanel">
+                      <!-- Bagian Logo Sekolah & Instansi -->
+                      <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white">
+                        <h6 class="fw-bold text-primary mb-2"><i class="fas fa-images me-2"></i>Logo Sekolah & Instansi (Resizer 250x250px Base64)</h6>
+                        <p class="small text-muted mb-4">Gunakan cropper manual 1:1 untuk memotong dan mengompres logo otomatis menjadi 250x250px. Disimpan langsung dalam format Base64 yang cepat, aman, dan tanpa ketergantungan link Google Drive.</p>
+                        
+                        <div class="row g-4">
+                          <div class="col-md-6">
+                            <div class="border p-4 rounded-4 text-center bg-light h-100 d-flex flex-column justify-content-between">
+                              <div>
+                                <span class="badge bg-primary-subtle text-primary mb-2">Logo Utama</span>
+                                <h6 class="fw-bold text-dark mb-3">Logo Sekolah</h6>
+                                <div class="d-flex justify-content-center align-items-center mb-3" style="height:110px;">
+                                  <img src="" id="preview_logo" class="bg-white rounded-3 shadow-sm p-2" style="max-height:100px; max-width:100px; object-fit:contain;" alt="Preview Logo Sekolah">
+                                </div>
+                              </div>
+                              <button type="button" class="btn btn-outline-primary rounded-pill w-100 fw-bold" onclick="startCrop('logo')">
+                                <i class="fas fa-crop-alt me-1"></i> Potong & Pasang Logo Sekolah
+                              </button>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="border p-4 rounded-4 text-center bg-light h-100 d-flex flex-column justify-content-between">
+                              <div>
+                                <span class="badge bg-secondary-subtle text-secondary mb-2">Logo Instansi</span>
+                                <h6 class="fw-bold text-dark mb-3">Logo Dinas / Pemerintah</h6>
+                                <div class="d-flex justify-content-center align-items-center mb-3" style="height:110px;">
+                                  <img src="" id="preview_instansi" class="bg-white rounded-3 shadow-sm p-2" style="max-height:100px; max-width:100px; object-fit:contain;" alt="Preview Logo Instansi">
+                                </div>
+                              </div>
+                              <button type="button" class="btn btn-outline-primary rounded-pill w-100 fw-bold" onclick="startCrop('instansi')">
+                                <i class="fas fa-crop-alt me-1"></i> Potong & Pasang Logo Instansi
+                              </button>
+                            </div>
+                          </div>
+
+                          <!-- Card Upload Foto Gedung Sekolah (Rasio 4:3) -->
+                          <div class="col-12">
+                            <div class="border p-4 rounded-4 text-center bg-light">
+                              <span class="badge bg-info-subtle text-info mb-2"><i class="fas fa-camera me-1"></i>Header Beranda 60%</span>
+                              <h6 class="fw-bold text-dark mb-1">Foto Gedung / Lingkungan Sekolah (Rasio 4:3)</h6>
+                              <p class="small text-muted mb-3">Foto ini akan ditampilkan sebagai latar belakang bagian kanan 60% pada header beranda dengan cropper manual 4:3 (Base64).</p>
+                              <div class="d-flex justify-content-center align-items-center mb-3">
+                                <img src="" id="preview_fotosekolah" class="bg-white rounded-3 shadow-sm p-1 border" style="max-height:140px; aspect-ratio:4/3; object-fit:cover; display:none;" alt="Preview Foto Sekolah">
+                                <div id="preview_fotosekolah_placeholder" class="text-muted small py-3">
+                                  <i class="fas fa-school fa-2x mb-1 d-block opacity-50"></i>
+                                  Belum ada foto gedung sekolah dipilih
+                                </div>
+                              </div>
+                              <button type="button" class="btn btn-outline-primary rounded-pill px-4 fw-bold" onclick="startCrop('fotosekolah')">
+                                <i class="fas fa-crop-alt me-1"></i> Potong & Pasang Foto Sekolah (Crop 4:3)
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Bagian Pilihan Tema Gradien 3 Warna -->
+                      <div class="card border-0 shadow-sm rounded-4 p-4 mb-3 bg-white">
+                        <h6 class="fw-bold text-primary mb-2"><i class="fas fa-fill-drip me-2"></i>Pilihan Tema Gradien 3 Warna</h6>
+                        <p class="small text-muted mb-4">Pilih kombinasi warna gradien 3 warna di bawah ini untuk diterapkan ke tombol utama, formulir, banner hero, dan menu sidebar kiri.</p>
+
+                        <!-- Presets Grid -->
+                        <div class="row g-3 mb-4">
+                          <div class="col-md-4 col-sm-6">
+                            <div class="theme-card-preset border rounded-4 p-3 text-center cursor-pointer" onclick="applyThemePreset('indigo', '#4e54c8', '#6c5ce7', '#8f94fb')" id="preset-indigo">
+                              <div class="theme-preview-box rounded-3 mb-2" style="height:48px; background: linear-gradient(135deg, #4e54c8 0%, #6c5ce7 50%, #8f94fb 100%);"></div>
+                              <div class="fw-bold small text-dark">Indigo Royal (Default)</div>
+                              <small class="text-muted">#4e54c8 • #6c5ce7 • #8f94fb</small>
+                            </div>
+                          </div>
+                          <div class="col-md-4 col-sm-6">
+                            <div class="theme-card-preset border rounded-4 p-3 text-center cursor-pointer" onclick="applyThemePreset('emerald', '#0ba360', '#10b981', '#3cba92')" id="preset-emerald">
+                              <div class="theme-preview-box rounded-3 mb-2" style="height:48px; background: linear-gradient(135deg, #0ba360 0%, #10b981 50%, #3cba92 100%);"></div>
+                              <div class="fw-bold small text-dark">Emerald Forest</div>
+                              <small class="text-muted">#0ba360 • #10b981 • #3cba92</small>
+                            </div>
+                          </div>
+                          <div class="col-md-4 col-sm-6">
+                            <div class="theme-card-preset border rounded-4 p-3 text-center cursor-pointer" onclick="applyThemePreset('sunset', '#eb3349', '#f45c43', '#ff8c42')" id="preset-sunset">
+                              <div class="theme-preview-box rounded-3 mb-2" style="height:48px; background: linear-gradient(135deg, #eb3349 0%, #f45c43 50%, #ff8c42 100%);"></div>
+                              <div class="fw-bold small text-dark">Sunset Crimson</div>
+                              <small class="text-muted">#eb3349 • #f45c43 • #ff8c42</small>
+                            </div>
+                          </div>
+                          <div class="col-md-4 col-sm-6">
+                            <div class="theme-card-preset border rounded-4 p-3 text-center cursor-pointer" onclick="applyThemePreset('ocean', '#1f4037', '#0082c8', '#6dd5ed')" id="preset-ocean">
+                              <div class="theme-preview-box rounded-3 mb-2" style="height:48px; background: linear-gradient(135deg, #1f4037 0%, #0082c8 50%, #6dd5ed 100%);"></div>
+                              <div class="fw-bold small text-dark">Ocean Deep</div>
+                              <small class="text-muted">#1f4037 • #0082c8 • #6dd5ed</small>
+                            </div>
+                          </div>
+                          <div class="col-md-4 col-sm-6">
+                            <div class="theme-card-preset border rounded-4 p-3 text-center cursor-pointer" onclick="applyThemePreset('violet', '#4a00e0', '#8e2de2', '#c471ed')" id="preset-violet">
+                              <div class="theme-preview-box rounded-3 mb-2" style="height:48px; background: linear-gradient(135deg, #4a00e0 0%, #8e2de2 50%, #c471ed 100%);"></div>
+                              <div class="fw-bold small text-dark">Royal Violet</div>
+                              <small class="text-muted">#4a00e0 • #8e2de2 • #c471ed</small>
+                            </div>
+                          </div>
+                          <div class="col-md-4 col-sm-6">
+                            <div class="theme-card-preset border rounded-4 p-3 text-center cursor-pointer" onclick="applyThemePreset('amber', '#d97706', '#f59e0b', '#fbbf24')" id="preset-amber">
+                              <div class="theme-preview-box rounded-3 mb-2" style="height:48px; background: linear-gradient(135deg, #d97706 0%, #f59e0b 50%, #fbbf24 100%);"></div>
+                              <div class="fw-bold small text-dark">Golden Amber</div>
+                              <small class="text-muted">#d97706 • #f59e0b • #fbbf24</small>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Custom 3-Color Pickers -->
+                        <div class="bg-light p-3 rounded-4 border mb-3">
+                          <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
+                            <h6 class="fw-bold text-dark mb-0"><i class="fas fa-sliders-h me-2"></i>Kustomisasi Sendiri 3 Warna Gradien</h6>
+                            <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill" onclick="resetThemeDefault()">Reset ke Default</button>
+                          </div>
+                          <div class="row g-3 align-items-center">
+                            <div class="col-4">
+                              <label class="small fw-semibold text-muted d-block mb-1">Warna 1 (Awal)</label>
+                              <input type="color" class="form-control form-control-color w-100 rounded-3" id="themeColor1" value="#4e54c8" oninput="updateCustomGradient()" onchange="updateCustomGradient()">
+                            </div>
+                            <div class="col-4">
+                              <label class="small fw-semibold text-muted d-block mb-1">Warna 2 (Tengah)</label>
+                              <input type="color" class="form-control form-control-color w-100 rounded-3" id="themeColor2" value="#6c5ce7" oninput="updateCustomGradient()" onchange="updateCustomGradient()">
+                            </div>
+                            <div class="col-4">
+                              <label class="small fw-semibold text-muted d-block mb-1">Warna 3 (Akhir)</label>
+                              <input type="color" class="form-control form-control-color w-100 rounded-3" id="themeColor3" value="#8f94fb" oninput="updateCustomGradient()" onchange="updateCustomGradient()">
+                            </div>
+                          </div>
+                          <!-- Live preview banner -->
+                          <div class="mt-3 p-3 rounded-3 text-white text-center fw-bold shadow-sm" id="liveThemePreview" style="background: linear-gradient(135deg, #4e54c8 0%, #6c5ce7 50%, #8f94fb 100%);">
+                            Contoh Tampilan Gradien Tema Aktif
+                          </div>
+                        </div>
+
+                        <div class="text-end mt-4">
+                          <button type="submit" class="btn btn-primary rounded-pill px-5 fw-bold shadow">
+                            <i class="fas fa-save me-1"></i> Simpan Logo & Tema
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- ================= TAB 3: BACKUP & RESTORE ================= -->
+                    <div class="tab-pane fade" id="tab-backup" role="tabpanel">
+                      <div class="row g-4">
+                        <!-- Card Backup -->
+                        <div class="col-md-6">
+                          <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                              <div class="bg-primary-subtle text-primary rounded-circle d-flex align-items-center justify-content-center" style="width:48px;height:48px;">
+                                <i class="fas fa-file-export fa-lg"></i>
+                              </div>
+                              <div>
+                                <h5 class="fw-bold mb-0 text-dark">Cadangkan Data (Backup)</h5>
+                                <small class="text-muted">Unduh seluruh database ke file JSON</small>
+                              </div>
+                            </div>
+                            <p class="small text-muted mb-4">
+                              Mengekspor seluruh data pengaduan, akun pengguna, dan konfigurasi aplikasi ke dalam file cadangan <code>.json</code>. Simpan file ini di tempat aman sebagai arsip data.
+                            </p>
+                            <div class="mt-auto">
+                              <button type="button" class="btn btn-primary rounded-pill w-100 py-2 fw-bold shadow-sm mb-2" onclick="exportBackupJSON()">
+                                <i class="fas fa-download me-2"></i> Unduh Cadangan Database (.json)
+                              </button>
+                              <button type="button" class="btn btn-outline-success rounded-pill w-100 py-2 fw-semibold" onclick="triggerDriveBackup()">
+                                <i class="fas fa-cloud-upload-alt me-2"></i> Buat Backup ke Google Drive
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Card Restore -->
+                        <div class="col-md-6">
+                          <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                              <div class="bg-danger-subtle text-danger rounded-circle d-flex align-items-center justify-content-center" style="width:48px;height:48px;">
+                                <i class="fas fa-history fa-lg"></i>
+                              </div>
+                              <div>
+                                <h5 class="fw-bold mb-0 text-dark">Pulihkan Data (Restore)</h5>
+                                <small class="text-muted">Kembalikan data dari file cadangan JSON</small>
+                              </div>
+                            </div>
+                            <p class="small text-muted mb-3">
+                              Unggah file cadangan <code>.json</code> yang pernah diunduh untuk memulihkan seluruh data pengaduan dan akun pengguna.
+                            </p>
+                            <div class="alert alert-warning py-2 px-3 small border-0 rounded-3 mb-3">
+                              <i class="fas fa-exclamation-triangle me-1"></i> Perhatian: Data saat ini akan digantikan dengan data dari file cadangan yang dipulihkan.
+                            </div>
+                            <div class="mb-3">
+                              <input type="file" id="restoreFileInput" class="form-control" accept=".json">
+                            </div>
+                            <div class="mt-auto">
+                              <button type="button" class="btn btn-danger rounded-pill w-100 py-2 fw-bold shadow-sm" onclick="importRestoreJSON()">
+                                <i class="fas fa-upload me-2"></i> Pulihkan Data Sekarang
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer Admin -->
+          <footer class="mt-4 pt-4 pb-2 text-muted border-top text-center small bg-transparent">
+            <div>&copy; <span id="ui-tahun-admin"></span> SiLaDuMas <b id="ui-namasekolah-admin"></b>. All Rights Reserved.</div>
+            <div>Dikelola oleh Tim Pengembang Pendidikan <a href="https://www.fary-edtech.my.id" target="_blank" class="text-primary text-decoration-none fw-bold">Fary EdTech</a></div>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Bukti Tanda Terima Pengaduan Digital (Receipt Popup) -->
+  <div class="modal fade" id="modalBuktiLapor" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content rounded-4 border-0 shadow-lg overflow-hidden">
+        <div class="modal-header bg-light border-0 py-3">
+          <div class="d-flex align-items-center gap-2">
+            <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width:38px;height:38px;">
+              <i class="fas fa-check"></i>
+            </div>
+            <div>
+              <h5 class="modal-title fw-bold text-dark mb-0">Laporan Berhasil Terkirim!</h5>
+              <small class="text-muted">Tanda terima digital pengaduan resmi</small>
+            </div>
+          </div>
+          <!-- Tombol silang header (Awalnya disembunyikan sampai bukti diunduh/dibagikan) -->
+          <button type="button" class="btn-close" id="headerCloseBtn" onclick="selesaiBuktiLapor()" style="display:none;" title="Tutup Jendela"></button>
+        </div>
+
+        <div class="modal-body p-3 p-md-4 bg-light">
+          <!-- AREA KARTU BUKTI TIKET (Akan dicapture menjadi PNG / JPG) -->
+          <div id="kartuBuktiTiket" class="receipt-card-wrapper bg-white">
+            <!-- Header Banner -->
+            <div class="receipt-top-banner">
+              <div class="receipt-badge-title">
+                <i class="fas fa-shield-alt me-1"></i> TANDA TERIMA PENGADUAN RESMI
+              </div>
+              <h4 class="fw-bold mb-1" id="receiptSekolah">SMAN 15 TEBO</h4>
+              <p class="small mb-0 opacity-75">SISTEM LAYANAN PENGADUAN MASYARAKAT (SiLaDuMas)</p>
+            </div>
+
+            <!-- Ticket Box -->
+            <div class="receipt-ticket-highlight">
+              <small class="text-muted text-uppercase fw-bold d-block mb-1" style="letter-spacing:1px; font-size:0.75rem;">NOMOR TIKET RESMI</small>
+              <div class="d-flex align-items-center justify-content-center gap-2">
+                <span class="receipt-ticket-number" id="receiptTiket">TKT-00000000-000</span>
+                <button type="button" class="btn btn-sm btn-outline-primary rounded-circle" title="Salin Nomor Tiket" onclick="copyTicketFromReceipt()">
+                  <i class="fas fa-copy"></i>
+                </button>
+              </div>
+              <small class="text-muted d-block mt-1">Gunakan nomor tiket ini untuk melacak perkembangan laporan Anda.</small>
+            </div>
+
+            <!-- Detail Data Pengirim & Rincian Pengaduan -->
+            <div class="receipt-content-body">
+              <table class="receipt-table-info">
+                <tr>
+                  <td class="label-col">Waktu Lapor</td>
+                  <td class="sep-col">:</td>
+                  <td class="val-col" id="receiptTanggal">-</td>
+                </tr>
+                <tr>
+                  <td class="label-col">Nama Pelapor</td>
+                  <td class="sep-col">:</td>
+                  <td class="val-col"><span id="receiptNama">-</span> (<span id="receiptStatusPelapor" class="text-muted">-</span>)</td>
+                </tr>
+                <tr>
+                  <td class="label-col">No. Identitas</td>
+                  <td class="sep-col">:</td>
+                  <td class="val-col" id="receiptIdentitas">-</td>
+                </tr>
+                <tr>
+                  <td class="label-col">No. Kontak / WA</td>
+                  <td class="sep-col">:</td>
+                  <td class="val-col" id="receiptKontak">-</td>
+                </tr>
+                <tr>
+                  <td class="label-col">Kategori</td>
+                  <td class="sep-col">:</td>
+                  <td class="val-col"><span class="badge bg-light text-dark border" id="receiptKategori">-</span></td>
+                </tr>
+                <tr>
+                  <td class="label-col">Pokok Masalah</td>
+                  <td class="sep-col">:</td>
+                  <td class="val-col text-primary fw-bold" id="receiptJudul">-</td>
+                </tr>
+                <tr>
+                  <td class="label-col">Lokasi Kejadian</td>
+                  <td class="sep-col">:</td>
+                  <td class="val-col" id="receiptLokasi">-</td>
+                </tr>
+                <tr>
+                  <td class="label-col">Waktu Kejadian</td>
+                  <td class="sep-col">:</td>
+                  <td class="val-col" id="receiptWaktuKejadian">-</td>
+                </tr>
+                <tr>
+                  <td class="label-col">Uraian Masalah</td>
+                  <td class="sep-col">:</td>
+                  <td class="val-col text-muted small" id="receiptUraian" style="word-break: break-word;">-</td>
+                </tr>
+                <tr>
+                  <td class="label-col">Status Awal</td>
+                  <td class="sep-col">:</td>
+                  <td class="val-col"><span class="badge bg-info text-white rounded-pill px-3" id="receiptStatus">BARU</span></td>
+                </tr>
+              </table>
+
+              <!-- Security Seal -->
+              <div class="receipt-security-seal">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                  <div class="fw-bold text-success" style="font-size:0.85rem;">DOKUMEN TERVERIFIKASI SISTEM</div>
+                  <small class="text-muted" style="font-size:0.75rem;">Laporan telah tercatat secara sah pada sistem pengaduan sekolah.</small>
+                </div>
+              </div>
+            </div>
+
+            <!-- Footer Card -->
+            <div class="receipt-bottom-footer">
+              <div>Simpan bukti ini sebagai tanda terima sah pelaporan Anda di <span id="receiptSekolahFooter">Sekolah</span>.</div>
+            </div>
+          </div>
+
+          <!-- Banner Notifikasi Kewajiban Simpan Bukti -->
+          <div class="mt-3 p-3 rounded-4 bg-white border text-center shadow-sm" id="boxNotifSimpan">
+            <div id="hintWajibSimpan" class="small text-danger fw-semibold">
+              <i class="fas fa-lock me-1"></i> <b>Wajib Unduh atau Bagikan</b> bukti tanda terima terlebih dahulu agar tombol Selesai dapat diklik.
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 Tombol Aksi: Selesai (Terkunci), Bagikan (WA), dan Unduh (PNG/JPG) -->
+        <div class="modal-footer bg-white border-0 py-3 justify-content-between flex-wrap gap-2">
+          <button type="button" class="btn btn-secondary rounded-pill px-4" id="btnSelesaiBukti" onclick="selesaiBuktiLapor()" disabled>
+            <i class="fas fa-lock me-1"></i> Selesai & Tutup
+          </button>
+          <div class="d-flex gap-2">
+            <button type="button" class="btn btn-success rounded-pill px-3 fw-bold shadow-sm" id="btnBagikanBukti" onclick="shareBuktiTicket()">
+              <i class="fab fa-whatsapp me-1"></i> Bagikan (WhatsApp)
+            </button>
+            <button type="button" class="btn btn-primary rounded-pill px-4 fw-bold shadow-sm" id="btnUnduhBukti" onclick="downloadBuktiImage()">
+              <i class="fas fa-download me-1"></i> Unduh Gambar (PNG)
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Kebijakan Privasi -->
+  <div class="modal fade" id="modalPrivacy" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content rounded-4 border-0">
+        <div class="modal-header bg-light border-0">
+          <h5 class="modal-title fw-bold text-primary"><i class="fas fa-user-shield me-2"></i>Kebijakan Privasi & Ketentuan Layanan</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4 text-justify" style="line-height: 1.8;">
+          <p><strong>Terakhir diperbarui:</strong> Tahun <span id="ui-tahun-privacy"></span></p>
+          <p>Sistem Layanan Pengaduan Masyarakat <span id="ui-namasekolah-privacy"></span> ("SiLaDuMas") berkomitmen menjaga privasi dan keamanan data pelapor. Ketentuan berikut mengatur tata kelola data yang masuk:</p>
+          <h6 class="fw-bold mt-3 text-dark">1. Data yang Dikumpulkan</h6>
+          <p class="text-muted small">Informasi yang dikumpulkan meliputi: Nama Lengkap, Nomor Identitas (NIS/NIK bila diisi), Nomor WhatsApp untuk konfirmasi tindak lanjut, lokasi kejadian, uraian laporan, dan berkas lampiran yang diunggah.</p>
+          <h6 class="fw-bold mt-3 text-dark">2. Penggunaan Informasi</h6>
+          <ul class="text-muted small">
+            <li>Memverifikasi kronologi kejadian yang diadukan.</li>
+            <li>Menghubungi pelapor untuk memberikan pembaruan status laporan.</li>
+            <li>Arsip evaluasi peningkatan mutu dan pelayanan sekolah.</li>
+          </ul>
+          <h6 class="fw-bold mt-3 text-dark">3. Kerahasiaan & Keamanan</h6>
+          <p class="text-muted small">Identitas pelapor bersifat rahasia dan tidak akan dipublikasikan secara umum. Akses laporan dibatasi hanya untuk staf admin yang berwenang.</p>
+        </div>
+        <div class="modal-footer border-0">
+          <button type="button" class="btn btn-primary rounded-pill px-4" data-bs-dismiss="modal">Saya Mengerti</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Detail Laporan -->
+  <div class="modal fade" id="modalDetail" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content border-0 shadow rounded-4">
+        <div class="modal-header bg-light border-0">
+          <h5 class="modal-title fw-bold text-primary">Detail Laporan Pengaduan</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <input type="hidden" id="editRow">
+          <div class="row">
+            <div class="col-md-7 border-end">
+              <table class="table table-sm table-borderless small mb-3">
+                <tr><td width="105" class="text-muted">ID Tiket</td><td>: <span id="dId" class="fw-bold text-primary"></span></td></tr>
+                <tr><td class="text-muted">Tanggal Lapor</td><td>: <span id="dTanggal"></span></td></tr>
+                <tr><td class="text-muted">Nama Pelapor</td><td>: <span id="dNama" class="fw-bold"></span></td></tr>
+                <tr><td class="text-muted">Kontak</td><td>: <span id="dKontak"></span> <span id="btnWa"></span></td></tr>
+              </table>
+              <label class="small fw-bold text-muted mb-2">URAIAN PENGADUAN:</label>
+              <div class="p-3 bg-light rounded-3 border mb-3">
+                <p class="mb-0" id="dUraian" style="white-space: pre-wrap; font-size: 0.95rem;"></p>
+              </div>
+            </div>
+            <div class="col-md-5 ps-md-4">
+              <div class="card mb-3 border bg-white">
+                <div class="card-header bg-transparent border-bottom small fw-bold text-muted">Berkas Bukti Lampiran</div>
+                <div class="card-body p-2 text-center" id="dBukti" style="min-height: 50px;"></div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-bold small">Ubah Status</label>
+                <select id="editStatus" class="form-select form-select-sm">
+                  <option value="Baru">Baru</option>
+                  <option value="Diproses">Diproses</option>
+                  <option value="Selesai">Selesai</option>
+                  <option value="Ditolak">Ditolak</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-bold small">Catatan Tindak Lanjut Admin</label>
+                <textarea id="editCatatan" class="form-control form-control-sm" rows="3" placeholder="Tuliskan perkembangan atau tindak lanjut..."></textarea>
+              </div>
+              <div class="d-grid gap-2">
+                <button type="button" class="btn btn-primary btn-sm fw-bold rounded-pill" onclick="saveUpdate()">
+                  <i class="fas fa-save me-1"></i> Simpan Perubahan
+                </button>
+                <button type="button" class="btn btn-outline-danger btn-sm rounded-pill" onclick="downloadPDF()">
+                  <i class="fas fa-file-pdf me-1"></i> Cetak Bukti PDF
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Tambah / Edit Pengguna -->
+  <div class="modal fade" id="modalUser" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow rounded-4">
+        <div class="modal-header bg-light border-0">
+          <h5 class="modal-title fw-bold" id="modalUserTitle">Tambah Akun Pengguna</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <form id="formUser" onsubmit="saveUserSubmit(event)">
+            <input type="hidden" id="u_isEdit" value="false">
+            <input type="hidden" id="u_rowIndex" value="">
+            <div class="mb-3">
+              <label class="form-label small fw-bold text-muted">Username</label>
+              <input type="text" id="u_username" class="form-control" required placeholder="Masukkan username">
+            </div>
+            <div class="mb-3">
+              <label class="form-label small fw-bold text-muted">Password <small id="u_pass_hint" class="text-warning"></small></label>
+              <input type="password" id="u_password" class="form-control" placeholder="Masukkan password">
+            </div>
+            <div class="mb-4">
+              <label class="form-label small fw-bold text-muted">Hak Akses Kategori</label>
+              <select id="u_role" class="form-select">
+                <option value="Semua">Semua (Superadmin)</option>
+                <option value="Sarana Prasarana">Sarana Prasarana</option>
+                <option value="Akademik">Akademik</option>
+                <option value="Bullying/Kedisiplinan">Bullying/Kedisiplinan</option>
+                <option value="Keuangan">Keuangan</option>
+                <option value="Lainnya">Lainnya</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 rounded-pill fw-bold py-2">
+              <i class="fas fa-check me-1"></i> Simpan Akun
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Tambah / Edit Foto Slide Banner -->
+  <div class="modal fade" id="modalSlide" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow rounded-4">
+        <div class="modal-header bg-light border-0 py-3">
+          <div class="d-flex align-items-center gap-2">
+            <i class="fas fa-images text-primary fa-lg"></i>
+            <div>
+              <h5 class="modal-title fw-bold text-dark mb-0" id="modalSlideTitle">Tambah Foto Slide</h5>
+              <small class="text-muted">Slide banner beranda dengan rasio 7:3</small>
+            </div>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <form id="formSlide" onsubmit="saveSlideSubmit(event)">
+            <input type="hidden" id="slide_isEdit" value="false">
+            <input type="hidden" id="slide_id" value="">
+            <input type="hidden" id="slide_imageData" value="">
+            
+            <!-- Pratinjau Banner -->
+            <div class="mb-3 text-center">
+              <label class="form-label small fw-bold text-muted d-block text-start">Foto Banner Slide (Rasio 7:3) <span class="text-danger">*</span></label>
+              <div class="border rounded-3 p-1 bg-dark mb-2 position-relative" style="aspect-ratio: 7/3; overflow:hidden; display:flex; align-items:center; justify-content:center;">
+                <img id="preview_slide_img" src="" alt="Pratinjau Slide" style="width:100%; height:100%; object-fit:cover; display:none; border-radius:6px;">
+                <div id="preview_slide_placeholder" class="text-muted small py-3">
+                  <i class="fas fa-image fa-2x mb-1 d-block opacity-50 text-white"></i>
+                  <span class="text-white-50">Belum ada foto banner dipilih</span>
+                </div>
+              </div>
+              <button type="button" class="btn btn-outline-primary btn-sm rounded-pill px-3 fw-bold" onclick="startCrop('slide')">
+                <i class="fas fa-crop-alt me-1"></i> Pilih & Potong Foto (7:3)
+              </button>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label small fw-bold text-muted">Judul Banner (Opsional)</label>
+              <input type="text" id="slide_title" class="form-control" placeholder="Contoh: Sosialisasi Anti Bullying SMAN 15 Tebo">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label small fw-bold text-muted">Deskripsi / Keterangan (Opsional)</label>
+              <textarea id="slide_desc" class="form-control" rows="2" placeholder="Tuliskan keterangan singkat pendukung banner..."></textarea>
+            </div>
+
+            <div class="mb-4 form-check form-switch ps-5">
+              <input class="form-check-input" type="checkbox" role="switch" id="slide_active" checked style="cursor:pointer; width: 2.2em; height: 1.2em;">
+              <label class="form-check-label small fw-bold ms-2" for="slide_active">Tampilkan Slide di Beranda (Status Aktif)</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 rounded-pill fw-bold py-2 shadow-sm">
+              <i class="fas fa-save me-1"></i> Simpan Foto Slide
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Sesuaikan Ukuran Logo & Slide (Cropper Manual 1:1 dan 7:3) -->
+  <div class="modal fade" id="modalCrop" tabindex="-1" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" id="cropModalDialog">
+      <div class="modal-content rounded-4 border-0 overflow-hidden shadow-lg">
+        <div class="modal-header bg-light border-0 py-3">
+          <div class="d-flex align-items-center gap-2">
+            <i class="fas fa-crop-alt text-primary fa-lg"></i>
+            <div>
+              <h5 class="modal-title fw-bold text-dark mb-0" id="cropModalTitle">Sesuaikan Ukuran Logo</h5>
+              <small class="text-muted" id="cropModalSubtitle">Cropper Manual Rasio 1:1 (Hasil Otomatis 250x250px Base64)</small>
+            </div>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-3 text-center bg-dark">
+          <div class="img-container" style="max-height: 420px;">
+            <img id="imageToCrop" src="" alt="Crop image">
+          </div>
+          <!-- Manual Toolbar: Zoom & Rotate Controls -->
+          <div class="mt-3 d-flex justify-content-center gap-2 flex-wrap">
+            <button type="button" class="btn btn-sm btn-light rounded-pill px-3 shadow-sm" onclick="cropperZoom(0.1)" title="Perbesar">
+              <i class="fas fa-search-plus me-1"></i> Zoom In
+            </button>
+            <button type="button" class="btn btn-sm btn-light rounded-pill px-3 shadow-sm" onclick="cropperZoom(-0.1)" title="Perkecil">
+              <i class="fas fa-search-minus me-1"></i> Zoom Out
+            </button>
+            <button type="button" class="btn btn-sm btn-light rounded-pill px-3 shadow-sm" onclick="cropperRotate(-90)" title="Putar Kiri">
+              <i class="fas fa-undo me-1"></i> Putar Kiri
+            </button>
+            <button type="button" class="btn btn-sm btn-light rounded-pill px-3 shadow-sm" onclick="cropperRotate(90)" title="Putar Kanan">
+              <i class="fas fa-redo me-1"></i> Putar Kanan
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-warning rounded-pill px-3" onclick="cropperReset()" title="Reset Posisi">
+              <i class="fas fa-sync-alt me-1"></i> Reset
+            </button>
+          </div>
+        </div>
+        <div class="modal-footer bg-white border-0 py-3 justify-content-between">
+          <button class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Batal</button>
+          <button class="btn btn-primary rounded-pill px-4 fw-bold shadow" id="cropApplyBtn" onclick="cropAndApplyBase64()">
+            <i class="fas fa-check me-1"></i> Terapkan Potongan
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Pratinjau Dokumen (Excel & PDF) Sebelum Unduh -->
+  <div class="modal fade" id="modalDocPreview" tabindex="-1" aria-labelledby="previewDocTitle" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" style="max-width: 1140px;">
+      <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+        
+        <!-- Header Modal & Toolbar Dokumen -->
+        <div class="modal-header bg-dark text-white py-2 px-3 border-0 d-flex flex-wrap align-items-center justify-content-between gap-2">
+          <div class="d-flex align-items-center me-2 my-1">
+            <div id="previewDocIconBox" class="rounded-circle p-2 me-2 d-flex align-items-center justify-content-center bg-danger-subtle text-danger" style="width: 38px; height: 38px;">
+              <i id="previewDocIcon" class="fas fa-file-pdf fs-6"></i>
+            </div>
+            <div>
+              <div class="d-flex align-items-center gap-2">
+                <h6 class="modal-title fw-bold text-white mb-0" id="previewDocTitle">Pratinjau Dokumen</h6>
+                <span id="previewDocBadge" class="badge bg-danger px-2 py-1">PDF</span>
+              </div>
+              <small class="text-white-50" id="previewDocSubtitle">SiLaDuMas Document Engine</small>
+            </div>
+          </div>
+
+          <!-- Toolbar Interaktif: Zoom, Cetak, Unduh, Tutup -->
+          <div class="d-flex align-items-center flex-wrap gap-2 my-1">
+            <!-- Zoom Controls Group -->
+            <div class="btn-group btn-group-sm bg-secondary bg-opacity-25 rounded-pill p-1 border border-secondary" role="group" aria-label="Zoom Dokumen">
+              <button type="button" class="btn btn-sm btn-dark text-white rounded-circle border-0 d-flex align-items-center justify-content-center" style="width: 28px; height: 28px;" onclick="zoomDocPreview(-0.1)" title="Perkecil Zoom (-)">
+                <i class="fas fa-minus small"></i>
+              </button>
+              <span id="previewZoomLabel" class="d-flex align-items-center px-2 text-white small fw-bold user-select-none" style="min-width: 48px; justify-content: center;">100%</span>
+              <button type="button" class="btn btn-sm btn-dark text-white rounded-circle border-0 d-flex align-items-center justify-content-center" style="width: 28px; height: 28px;" onclick="zoomDocPreview(0.1)" title="Perbesar Zoom (+)">
+                <i class="fas fa-plus small"></i>
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-light text-white rounded-circle border-0 d-flex align-items-center justify-content-center ms-1" style="width: 28px; height: 28px;" onclick="resetZoomDocPreview()" title="Reset Ukuran (100%)">
+                <i class="fas fa-undo-alt small"></i>
+              </button>
+            </div>
+
+            <!-- Tombol Cetak / Print -->
+            <button type="button" class="btn btn-sm btn-light rounded-pill px-3 fw-semibold shadow-sm text-dark d-flex align-items-center gap-1" onclick="printDocPreview()" title="Cetak Langsung dari Browser">
+              <i class="fas fa-print text-primary"></i> <span>Cetak</span>
+            </button>
+
+            <!-- Tombol Unduh / Download File -->
+            <button type="button" class="btn btn-sm btn-success rounded-pill px-3 fw-bold shadow-sm d-flex align-items-center gap-1" id="btnPreviewDownload" onclick="executeDocDownload()" title="Unduh File ke Komputer">
+              <i class="fas fa-download"></i> <span id="btnPreviewDownloadText">Unduh File</span>
+            </button>
+
+            <!-- Tombol Tutup X -->
+            <button type="button" class="btn-close btn-close-white ms-1" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+        </div>
+
+        <!-- Body Canvas Pratinjau Kertas -->
+        <div class="modal-body p-0 doc-preview-canvas" id="previewCanvasArea" style="background: #3e444a; min-height: 560px; max-height: calc(85vh - 75px); overflow: auto;">
+          <div class="d-flex justify-content-center p-3 p-md-4">
+            <div id="previewDocPaper" class="doc-preview-paper shadow-lg bg-white rounded-3" style="width: 100%; max-width: 900px; min-height: 600px; transform-origin: top center;">
+              <iframe id="previewDocIframe" title="Pratinjau Dokumen" style="width: 100%; height: 750px; border: none; display: block; border-radius: 8px;"></iframe>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Modal -->
+        <div class="modal-footer bg-light py-2 px-3 border-top justify-content-between">
+          <small class="text-muted"><i class="fas fa-info-circle me-1 text-primary"></i> Anda dapat mencetak atau mengunduh dokumen secara langsung melalui tombol di toolbar atas.</small>
+          <button type="button" class="btn btn-secondary btn-sm rounded-pill px-4" data-bs-dismiss="modal">Tutup</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <input type="file" id="cropInput" style="display:none;" accept="image/*">
+
+  <!-- ======================================================= -->
+  <!-- APPLICATION SCRIPTS (MODULAR ARCHITECTURE)              -->
+  <!-- ======================================================= -->
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/mock.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/public.js"></script>
+  <script src="js/admin.js"></script>
+
+  <!-- Inisialisasi Aplikasi Saat Halaman Siap -->
+  <script>
+    $(document).ready(function() {
+      loadAppConfig();
+    });
+  </script>
+</body>
+</html>

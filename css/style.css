@@ -1,0 +1,545 @@
+/**
+ * ====================================================================
+ * SiLaDuMas - Sistem Layanan Pengaduan Masyarakat
+ * Style: style.css (Core Design System & Global Styles)
+ * ====================================================================
+ */
+
+:root {
+  --primary-solid: #4e54c8;
+  --primary-hover: #3f44a5;
+  --primary-light: rgba(78, 84, 200, 0.08);
+  --primary-grad: linear-gradient(135deg, #4e54c8 0%, #6c5ce7 50%, #8f94fb 100%);
+  --secondary: #2c3e50;
+  --accent: #ff9f43;
+  --accent-hover: #ffb064;
+  --dark-bg: #1a252f;
+  --light-bg: #f4f7f6;
+  --surface: #ffffff;
+  --border-color: #e9ecef;
+  --text-muted: #6c757d;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 15px 35px rgba(0, 0, 0, 0.12);
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+}
+
+/* Reset & Base Elements */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  touch-action: pan-y;
+  overscroll-behavior-y: none;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--light-bg);
+  color: var(--secondary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Form Elements Touch Opt */
+input, button, select, textarea {
+  touch-action: manipulation;
+  font-family: inherit;
+}
+
+/* Links */
+a {
+  color: var(--primary-solid);
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+a:hover {
+  color: var(--primary-hover);
+}
+
+/* Navbar */
+.navbar {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow: var(--shadow-sm);
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.school-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.school-brand .school-name {
+  font-weight: 700;
+  color: var(--primary-solid);
+  font-size: 1.15rem;
+  line-height: 1.25;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ====================================================================
+ * 40:60 SPLIT HERO SECTION WITH ORGANIC CURVED DIVIDER
+ * ==================================================================== */
+.hero-split-container {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background: #0f172a;
+}
+
+.hero-split-wrapper {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  min-height: 480px;
+}
+
+@media (min-width: 992px) {
+  .hero-split-wrapper {
+    flex-direction: row;
+    min-height: 520px;
+  }
+}
+
+/* 40% Left Side: School Identity on Living Gradient with Slanted Divider (Miring & Bergerak) */
+.hero-side-40 {
+  flex: 0 0 100%;
+  background: var(--primary-grad);
+  background-size: 260% 260%;
+  animation: livingGradientShift 14s ease infinite;
+  color: white;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 24px 60px;
+  z-index: 2;
+  clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%); /* Batas Miring di Mobile */
+  overflow: hidden;
+  transition: background var(--transition-normal);
+}
+
+.hero-side-40::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  right: -60px;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.22) 0%, rgba(0, 0, 0, 0.25) 55%, transparent 75%);
+  filter: blur(45px);
+  pointer-events: none;
+  z-index: 1;
+  animation: ambientShadowFloat1 16s ease-in-out infinite;
+}
+
+.hero-side-40::after {
+  content: '';
+  position: absolute;
+  bottom: -90px;
+  left: -60px;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.3) 0%, rgba(255, 255, 255, 0.16) 50%, transparent 75%);
+  filter: blur(50px);
+  pointer-events: none;
+  z-index: 1;
+  animation: ambientShadowFloat2 18s ease-in-out infinite;
+}
+
+@media (min-width: 992px) {
+  .hero-side-40 {
+    flex: 0 0 46%;
+    padding: 60px 50px 60px 60px;
+    clip-path: polygon(0 0, 100% 0, 84% 100%, 0 100%); /* Batas Miring Diagonal di Desktop */
+  }
+}
+
+.hero-40-content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 440px;
+}
+
+.hero-logos-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.hero-logos-row img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  padding: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transition: transform var(--transition-fast);
+}
+
+.hero-logos-row img:hover {
+  transform: scale(1.06);
+}
+
+.badge-provinsi {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  padding: 5px 16px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  margin-bottom: 12px;
+}
+
+.hero-school-name {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  line-height: 1.2;
+}
+
+.hero-divider-bar {
+  width: 50px;
+  height: 4px;
+  background: var(--accent, #ff9f43);
+  border-radius: 4px;
+  margin-bottom: 14px;
+}
+
+.hero-school-slogan {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  opacity: 0.92;
+  font-weight: 300;
+  margin-bottom: 18px;
+}
+
+.hero-official-badge {
+  font-size: 0.82rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.16);
+  padding: 6px 14px;
+  border-radius: 10px;
+}
+
+/* 60% Right Side: School Campus Photo with Complaint Call to Action */
+.hero-side-60 {
+  flex: 0 0 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 70px 24px;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  transition: background-image 0.5s ease;
+}
+
+@media (min-width: 992px) {
+  .hero-side-60 {
+    flex: 0 0 62%;
+    margin-left: -8%; /* Overlap seamless di balik potongan miring 40% */
+    padding: 70px 40px 70px 65px;
+  }
+}
+
+.hero-60-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.82) 0%, rgba(15, 23, 42, 0.62) 100%);
+  backdrop-filter: blur(1.5px);
+  z-index: 1;
+}
+
+.hero-60-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 620px;
+}
+
+.hero-60-title {
+  font-size: 2.3rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 14px;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+}
+
+@media (max-width: 768px) {
+  .hero-60-title {
+    font-size: 1.75rem;
+  }
+  .hero-school-name {
+    font-size: 1.6rem;
+  }
+}
+
+.hero-60-lead {
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 1.05rem;
+  font-weight: 300;
+  margin-bottom: 28px;
+}
+
+/* Buttons */
+.btn-hero {
+  padding: 14px 38px;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all var(--transition-normal);
+  border: none;
+  font-size: 0.95rem;
+}
+
+.btn-primary-custom {
+  background-color: var(--accent);
+  color: white;
+  box-shadow: 0 10px 22px rgba(255, 159, 67, 0.4);
+}
+
+.btn-primary-custom:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-3px);
+  color: white;
+  box-shadow: 0 12px 28px rgba(255, 159, 67, 0.5);
+}
+
+.btn-outline-custom {
+  background: rgba(255,255,255,0.12);
+  border: 2px solid rgba(255,255,255,0.6);
+  color: white;
+  backdrop-filter: blur(5px);
+}
+
+.btn-outline-custom:hover {
+  background: white;
+  color: var(--primary-solid);
+  border-color: white;
+  transform: translateY(-3px);
+}
+
+/* Feature Cards */
+.feature-card {
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: 35px 25px;
+  text-align: center;
+  color: white;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+}
+
+.card-blue { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+.card-orange { background: linear-gradient(135deg, #fc6076 0%, #ff9a44 100%); }
+.card-green { background: linear-gradient(135deg, #0ba360 0%, #3cba92 100%); }
+
+.feature-icon {
+  width: 65px;
+  height: 65px;
+  margin: 0 auto 18px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  color: white;
+}
+
+.feature-card p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+  margin-bottom: 0;
+}
+
+/* Info Section & Footer */
+.info-section {
+  background: var(--secondary);
+  color: white;
+  padding: 60px 0;
+  margin-top: auto;
+}
+
+.info-link {
+  text-decoration: none;
+  color: rgba(255,255,255,0.75);
+  transition: var(--transition-fast);
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.info-link:hover {
+  color: var(--accent);
+  transform: translateX(4px);
+}
+
+.info-link i {
+  width: 24px;
+  color: var(--accent);
+}
+
+.icon-map-wrapper {
+  width: 40px;
+  height: 40px;
+  font-size: 1.15rem;
+  margin: 0 15px 0 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+footer {
+  background: var(--dark-bg);
+  color: rgba(255, 255, 255, 0.55);
+  padding: 22px 0;
+  font-size: 0.85rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ====================================================================
+ * SLIDER BANNER SECTION: LATAR BELAKANG GRADIEN HIDUP & POTONGAN MIRING
+ * ==================================================================== */
+.home-slider-backdrop-section {
+  background: var(--primary-grad);
+  background-size: 260% 260%;
+  animation: livingGradientShift 15s ease infinite;
+  padding: 55px 0 85px;
+  margin-top: 0;
+  margin-bottom: -35px;
+  position: relative;
+  overflow: hidden;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 35px), 0 100%);
+  box-shadow: inset 0 10px 25px rgba(0, 0, 0, 0.15);
+  transition: background var(--transition-normal);
+}
+
+.home-slider-backdrop-section::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.22) 0%, rgba(0, 0, 0, 0.22) 55%, transparent 75%);
+  filter: blur(45px);
+  pointer-events: none;
+  animation: ambientShadowFloat1 15s ease-in-out infinite;
+}
+
+.home-slider-backdrop-section::after {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  left: -60px;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.28) 0%, rgba(255, 255, 255, 0.15) 50%, transparent 75%);
+  filter: blur(50px);
+  pointer-events: none;
+  animation: ambientShadowFloat2 17s ease-in-out infinite;
+}
+
+/* ====================================================================
+ * KEYFRAMES ANIMASI GRADIEN BERGERAK & AMBIENT FLOATING SHADOWS
+ * ==================================================================== */
+@keyframes livingGradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes ambientShadowFloat1 {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+    opacity: 0.35;
+  }
+  33% {
+    transform: translate(35px, -25px) scale(1.18);
+    opacity: 0.55;
+  }
+  66% {
+    transform: translate(-20px, 30px) scale(0.92);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+    opacity: 0.35;
+  }
+}
+
+@keyframes ambientShadowFloat2 {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+    opacity: 0.3;
+  }
+  33% {
+    transform: translate(-30px, 35px) scale(1.15);
+    opacity: 0.5;
+  }
+  66% {
+    transform: translate(25px, -20px) scale(0.9);
+    opacity: 0.35;
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+    opacity: 0.3;
+  }
+}
