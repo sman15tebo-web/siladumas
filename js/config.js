@@ -12,7 +12,7 @@ const CONFIG = {
   DEV_MODE: true,
 
   // URL Web App Google Apps Script Produksi
-  API_URL: "https://script.google.com/a/macros/admin.sma.belajar.id/s/AKfycbzevU966AsCWWebjyIldlVjtW4H6Re_jPXWp5km9cfvgHkHJ1pU6jspcOgErB2lYn3b_Q/exec",
+  API_URL: "https://script.google.com/macros/s/AKfycbyW734vMU9ONPBJ0jdzz36EUbdhPcJWY31Qf8rkwNYyPoSZuJdjMmFVLwgEwvxzav9nPA/exec",
   
   // Storage Keys
   STORAGE_TOKEN: "admToken",
